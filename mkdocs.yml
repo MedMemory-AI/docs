@@ -25,7 +25,7 @@ nav:
 
   - Architecture:
       - Server Architecture: Architecture/rag-server.md
-      - Client Architecture: Architecture/database-design.md
+      - Database Design: Architecture/database-design.md
       - System Workflows: Architecture/workflows.md
 
   - Design Decisions:
