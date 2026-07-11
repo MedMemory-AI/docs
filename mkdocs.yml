@@ -1,0 +1,37 @@
+site_name: MedMemory AI Technical Docs
+site_url: https://medmemory-ai.github.io/docs/
+repo_url: https://github.com/MedMemory-AI/docs
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+    - scheme: slate
+      primary: teal
+      accent: teal
+
+plugins:
+  - search
+
+nav:
+  - Welcome: index.md
+
+  - Architecture:
+      - Server Architecture: Architecture/rag-server.md
+      - Client Architecture: Architecture/database-design.md
+
+  - Design Decisions:
+      - Storage Engine Choices: Design-Decisions/storage.md
+
+  - Tech Stack Overview: Tech-Stack.md
+  - Folder Structure: Folder-Structure.md
+
+  - User Guide: Guides/how-to-use.md
+  - Local Setup: Guides/local-setup.md
