@@ -1,5 +1,5 @@
 <div align="center">
-    <img alt="MedMemory Logo" src="https://github.com/MedMemory-AI/docs/tree/main/assets/logo.png" width="200" style="border-radius: 20%; margin-bottom: 20px;">
+    <img alt="MedMemory Logo" src="./assets/logo.png" width="200" style="border-radius: 20%; margin-bottom: 20px;">
   
   <h1><b>MedMemory AI Architecture Portal</b></h1>
   <p><b>An open-source, privacy-first medical memory engine. Transform scattered health records into a structured timeline in real-time.

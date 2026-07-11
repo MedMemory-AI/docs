@@ -17,7 +17,7 @@ This workflow parses multi-format, unstructured clinical records and extracts th
     * **PostgreSQL:** Stores rigid chronological event rows (Patient Profile, Event Timestamps, Medications, Entities, Labs).
     * **Qdrant Vector DB:** The LLM generates summary text strings, which are compiled into 1024-dimension vectors via `mxbai-embed-large` and indexed for semantic searches.
 
-![Ingestion-Workflow](https://github.com/MedMemory-AI/docs/tree/main/assets/workflow-ingestion.png)
+![Ingestion-Workflow](../assets/workflow-ingestion.png)
 
 ---
 
@@ -34,4 +34,4 @@ This workflow utilizes a cyclic multi-agent graph to contextually navigate a pat
 4.  **Guardrailed Generation:** The compiled context passes to a localized `Ollama / llama3.2` engine instructed strictly to form answers based *only* on the injected data to completely eliminate hallucinations.
 5.  **Memory Synchronization:** The conversational state and final response loop back into LangGraph's persistent history layer, allowing the engine to cleanly handle follow-up context in the next turn.
 
-![Chatbot-Workflow](https://github.com/MedMemory-AI/docs/tree/main/assets/workflow-chatbot.png)
+![Chatbot-Workflow](../assets/workflow-chatbot.png)

@@ -24,6 +24,6 @@ The platform transforms medical documents into a lifelong, searchable health mem
 
 ### Architecture Images
 
-![Server-Architecture-1](https://github.com/MedMemory-AI/docs/tree/main/assets/server-architecture-1.png)
+![Server-Architecture-1](../assets/server-architecture-1.png)
 
-![Server-Architecture-2](https://github.com/MedMemory-AI/docs/tree/main/assets/server-architecture-2.png)
+![Server-Architecture-2](../assets/server-architecture-2.png)
