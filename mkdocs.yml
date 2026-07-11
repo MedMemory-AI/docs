@@ -1,6 +1,6 @@
 site_name: MedMemory AI Technical Docs
 site_url: https://medmemory-ai.github.io/docs/
-repo_url: https://github.com/MedMemory-AI/docs
+repo_url: https://github.com/MedMemory-AI/MedMemory
 edit_uri: edit/main/docs/
 
 theme:
@@ -26,6 +26,7 @@ nav:
   - Architecture:
       - Server Architecture: Architecture/rag-server.md
       - Client Architecture: Architecture/database-design.md
+      - System Workflows: Architecture/workflows.md
 
   - Design Decisions:
       - Storage Engine Choices: Design-Decisions/storage.md
