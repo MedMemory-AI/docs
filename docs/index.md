@@ -9,7 +9,7 @@ Welcome to the central technical blueprints repository for MedMemory AI. Here yo
 
   <br>
   
-  <p><b>
+  <p style="font-size:1.5em"><b>
     <a href="">Live App</a> •
     <a href="https://github.com/orgs/MedMemory-AI/discussions">Discussions</a> •
     <a href="https://medmemory-ai.github.io/docs/">Documentation</a> •
