@@ -1,6 +1,6 @@
 site_name: MedMemory AI Technical Docs
 site_url: https://medmemory-ai.github.io/docs/
-repo_url: https://github.com/MedMemory-AI/MedMemory
+repo_url: https://github.com/MedMemory-AI
 edit_uri: edit/main/docs/
 
 theme:
@@ -24,15 +24,26 @@ nav:
   - Welcome: index.md
 
   - Architecture:
-      - Server Architecture: Architecture/rag-server.md
-      - Database Design: Architecture/database-design.md
-      - System Workflows: Architecture/workflows.md
+      - Server Architecture: Architecture/RAG-Server.md
+      - Database Design: Architecture/Database-design.md
+      - System Workflows: Architecture/Workflows.md
+      - API Reference: Architecture/API-Ref.md
 
   - Design Decisions:
       - Storage Engine Choices: Design-Decisions/storage.md
 
   - Tech Stack Overview: Tech-Stack.md
+
   - Folder Structure: Folder-Structure.md
 
-  - User Guide: Guides/how-to-use.md
-  - Local Setup: Guides/local-setup.md
+  - Guides:
+    - User Guide: Guides/How-to-Use.md
+    - Local Setup: Guides/Local-Setup.md
+    - Contributing: Guides/Contributing-Guide.md
+    - Deployment:
+      - AWS EKS: Guides/Deployment/AWS-EKS.md
+      - OCI: Guides/Deployment/OCI.md
+
+  - Roadmap: Roadmap.md
+
+  - FAQ: FAQ.md
