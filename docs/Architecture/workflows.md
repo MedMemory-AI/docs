@@ -1,37 +1,382 @@
 # ⚙️ Core System Workflows
 
-MedMemory AI processes data through two highly specialized engine workflows: an asynchronous ingestion pipeline and a stateful conversational query router.
+MedMemory AI operates through two primary workflows:
+
+1. **Document Ingestion Pipeline** — Converts medical documents into structured medical memory.
+2. **Conversational RAG Pipeline** — Retrieves and synthesizes relevant patient history for AI-powered chat.
 
 ---
 
-## 1. Document Ingestion Pipeline
+# 1. Document Ingestion Pipeline
 
-This workflow parses multi-format, unstructured clinical records and extracts them into atomic, verifiable entries.
+This workflow transforms prescriptions, lab reports, discharge summaries, and clinical documents into structured medical records and semantic memory.
 
-### Execution Sequence:
-1.  **Ingestion & OCR:** Raw PDFs, scans, and image prescriptions are parsed using `Docling` to extract clean structural layout text blocks.
-2.  **Normalization & Splitting:** Text undergoes noise removal and headers/footers cleaning before being split into meaningful sentence structures via `spaCy`.
-3.  **Medical NER:** `scispacy` and `MedCAT` analyze chunks to tag critical medical entities (diseases, symptoms, dosages, specific drugs).
-4.  **Structured Event Construction:** A local LLM takes the tagged sentences and builds exact chronological events matching explicit Pydantic JSON validation schemas.
-5.  **Hybrid Storage Layer:**
-    * **PostgreSQL:** Stores rigid chronological event rows (Patient Profile, Event Timestamps, Medications, Entities, Labs).
-    * **Qdrant Vector DB:** The LLM generates summary text strings, which are compiled into 1024-dimension vectors via `mxbai-embed-large` and indexed for semantic searches.
+## Execution Sequence
+
+### 1. Document Upload & OCR
+
+Users upload:
+
+- Prescriptions
+- Lab Reports
+- Scan Reports
+- Discharge Summaries
+
+Documents are processed using:
+
+- `PyMuPDF` (PDF extraction)
+- `Tesseract OCR` (images and scanned PDFs)
+
+to obtain clean machine-readable text.
+
+---
+
+### 2. Text Cleaning & Normalization
+
+Extracted text undergoes:
+
+- OCR noise removal
+- Whitespace normalization
+- Header/Footer removal
+- Basic formatting cleanup
+
+to improve downstream extraction quality.
+
+---
+
+### 3. Medical Information Extraction
+
+A local LLM analyzes the cleaned text and extracts clinically relevant information into a validated structured schema.
+
+Examples:
+
+- Doctor Name
+- Hospital Name
+- Diagnosis
+- Symptoms
+- Medications
+- Dosage
+- Findings
+- Tests
+- Recommendations
+- Document Date
+
+All outputs are validated using Pydantic models before storage.
+
+---
+
+### 4. Structured Document Construction
+
+The extracted information is transformed into a normalized medical document object.
+
+Example:
+
+```json
+{
+  "doctor": "Dr. Sharma",
+  "document_date": "2025-01-10",
+  "diagnosis": ["Type 2 Diabetes"],
+  "medications": ["Metformin 500mg"],
+  "findings": ["HbA1c 9.2%"]
+}
+```
+
+---
+
+### 5. Hybrid Storage Layer
+
+#### PostgreSQL
+
+Stores structured medical records:
+
+- Patient Profile
+- Medical Documents
+- Diagnoses
+- Treatments
+- Findings
+- Timeline Metadata
+
+PostgreSQL acts as the system's source of truth.
+
+---
+
+#### Qdrant
+
+The document is summarized into a concise semantic representation.
+
+Example:
+
+```text
+Type 2 Diabetes diagnosed.
+Metformin initiated.
+HbA1c elevated at 9.2%.
+```
+
+The summary is embedded using:
+
+```text
+mxbai-embed-large
+```
+
+and stored in Qdrant with metadata:
+
+```json
+{
+  "patient_id": "...",
+  "postgres_id": "...",
+  "document_type": "...",
+  "doctor": "...",
+  "date": "..."
+}
+```
+
+This enables semantic retrieval during conversations.
+
+---
+
+### Storage Outcome
+
+```text
+Medical Document
+        ↓
+OCR
+        ↓
+Structured Extraction
+        ↓
+ ┌──────────────┬──────────────┐
+ │              │              │
+PostgreSQL    Summary      Metadata
+(Source)         ↓             ↓
+                 Embedding
+                     ↓
+                 Qdrant
+```
 
 ![Ingestion-Workflow](../assets/workflow-ingestion.png)
 
 ---
 
-## 2. Chatbot Pipeline
+# 2. Conversational RAG Pipeline
 
-This workflow utilizes a cyclic multi-agent graph to contextually navigate a patient's historical records during conversational turns.
+This workflow enables users to chat with their complete medical history using retrieval-augmented generation (RAG).
 
-### Execution Sequence:
-1.  **Intent Classification:** The user submits a prompt (e.g., *"What is its dose?"*). A local LLM intent classifier evaluates the request along with active conversation history to detect information targets.
-2.  **Parallel Data Retrieval Router:**
-    * **SQL Path (PostgreSQL):** Resolves structured queries tracking relational data points (timeline sorting, specific labs, exact numerical metrics).
-    * **Vector Path (Qdrant):** Converts questions into semantic text vectors to retrieve matches across narrative notes and doctor summaries.
-3.  **Context Builder & Synthesis:** Retrieved tables and embedding fragments are combined, deduplicated, and ranked into a clean context package.
-4.  **Guardrailed Generation:** The compiled context passes to a localized `Ollama / llama3.2` engine instructed strictly to form answers based *only* on the injected data to completely eliminate hallucinations.
-5.  **Memory Synchronization:** The conversational state and final response loop back into LangGraph's persistent history layer, allowing the engine to cleanly handle follow-up context in the next turn.
+---
+
+## Execution Sequence
+
+### 1. User Query
+
+The user submits a question.
+
+Examples:
+
+```text
+What medications am I currently taking?
+
+When was diabetes diagnosed?
+
+How has my treatment changed over time?
+```
+
+---
+
+### 2. Intent Classification
+
+A lightweight LLM router classifies the query into one of three categories:
+
+#### Structured
+
+Requires exact database records.
+
+Examples:
+
+```text
+Show all medications.
+
+Show my latest prescription.
+
+List all doctors visited.
+```
+
+---
+
+#### Semantic
+
+Requires semantic understanding of historical context.
+
+Examples:
+
+```text
+Summarize my heart-related issues.
+
+What patterns do you see in my health history?
+```
+
+---
+
+#### Hybrid
+
+Requires both structured records and semantic context.
+
+Examples:
+
+```text
+How has my diabetes treatment changed over time?
+
+Compare my current treatment with previous treatments.
+```
+
+---
+
+### 3. Retrieval Layer
+
+#### Structured Path
+
+The system directly retrieves relevant records from PostgreSQL.
+
+Examples:
+
+- Medications
+- Diagnoses
+- Timeline Events
+- Reports
+
+---
+
+#### Semantic Path
+
+The query is embedded and searched against Qdrant.
+
+Retrieval is filtered by:
+
+```text
+patient_id
+```
+
+to ensure patient isolation.
+
+---
+
+#### Hybrid Path
+
+The system:
+
+```text
+Query
+    ↓
+Qdrant Search
+    ↓
+Retrieve postgres_id metadata
+    ↓
+Fetch source records from PostgreSQL
+```
+
+This combines:
+
+- Semantic relevance from Qdrant
+- Structured accuracy from PostgreSQL
+
+without requiring text-to-SQL generation.
+
+---
+
+### 4. Context Builder
+
+Retrieved information is:
+
+- Deduplicated
+- Ranked
+- Organized
+- Compressed
+
+into a clean context package.
+
+Example:
+
+```text
+Diagnosis:
+Type 2 Diabetes
+
+Timeline:
+Jan 2023 → Diagnosis
+Feb 2023 → Metformin Started
+Jul 2024 → Dosage Increased
+
+Relevant Notes:
+Patient showed improved glucose control.
+```
+
+---
+
+### 5. Response Generation
+
+The compiled context is passed to a local LLM through Ollama.
+
+The model is instructed to:
+
+- Answer only from provided context
+- Avoid unsupported assumptions
+- Cite relevant medical history when possible
+
+This significantly reduces hallucinations.
+
+---
+
+### 6. Conversational Memory
+
+LangGraph maintains conversation state including:
+
+- Previous user questions
+- Previous AI responses
+- Active patient context
+
+allowing the system to handle follow-up questions naturally.
+
+Example:
+
+```text
+User:
+When was diabetes diagnosed?
+
+Assistant:
+January 2023.
+
+User:
+Who prescribed the medication?
+
+Assistant:
+Dr. Sharma prescribed Metformin during the initial diagnosis visit.
+```
+
+---
+
+### Retrieval Architecture
+
+```text
+User Query
+      ↓
+Intent Router
+      ↓
+
+ ┌────────────┬────────────┬────────────┐
+ │Structured  │ Semantic   │  Hybrid    │
+ └────────────┴────────────┴────────────┘
+
+      ↓             ↓             ↓
+
+ PostgreSQL      Qdrant      Qdrant
+                               ↓
+                         postgres_id
+                               ↓
+                          PostgreSQL
+
+      ↓             ↓             ↓
+
+        Context Builder
+               ↓
+          Ollama LLM
+               ↓
+          Final Answer
+```
 
 ![Chatbot-Workflow](../assets/workflow-chatbot.png)

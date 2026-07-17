@@ -1,47 +1,72 @@
 # 🗄️ Database & Vector Store Schema Design
 
-MedMemory AI splits data across a transactional relational layer (PostgreSQL) and a dense semantic retrieval layer (Qdrant Vector DB) to ensure fast chronological tracking alongside high-accuracy RAG capabilities.
+MedMemory AI uses a hybrid storage architecture consisting of:
+
+- **PostgreSQL** → Source of truth for structured patient records and chronological medical history.
+- **Qdrant Vector Database** → Semantic memory layer for Retrieval-Augmented Generation (RAG) and contextual AI conversations.
+
+This separation enables reliable timeline tracking while supporting intelligent semantic search across a patient's medical history.
 
 ---
 
-## 🐘 1. Relational Database Layer (PostgreSQL)
+# 🐘 1. Relational Database Layer (PostgreSQL)
 
-This schema tracks rigid structural parameters, clinical entities, timelines, and relationships. 
+The relational layer stores structured patient information extracted from prescriptions, reports, scans, and other medical documents.
 
-### `patients` Table
-*Primary profile storage for local sandbox tracking.*
+---
 
-| Column Name | Data Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `UUID` | `PRIMARY KEY` | Unique identification token for the patient. |
-| `full_name` | `VARCHAR(255)` | `NOT NULL` | The legal full name of the patient. |
-| `email` | `VARCHAR(255)` | `UNIQUE`, `NOT NULL` | Electronic mailing login reference address. |
-| `password` | `VARCHAR(255)` | `NOT NULL` | Encrypted password hash string (bcrypt/argon2). |
+## `patients` Table
 
-### `prescriptions` Table
-*Captures transactional details extracted directly from doctor prescriptions.*
+Primary profile storage for each patient.
 
 | Column Name | Data Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | `PRIMARY KEY` | Unique prescription entry identification key. |
+| `id` | `UUID` | `PRIMARY KEY` | Unique patient identifier. |
+| `full_name` | `VARCHAR(100)` | `NOT NULL` | Full name of the patient. |
+| `email` | `VARCHAR(255)` | `UNIQUE`, `NOT NULL` | Login email address. |
+| `password` | `VARCHAR(255)` | `NOT NULL` | Secure password hash (bcrypt/argon2). |
+| `created_at` | `TIMESTAMPTZ` | `DEFAULT NOW()` | Record creation timestamp. |
+
+---
+
+## `documents` Table
+
+Unified storage for all uploaded medical documents.
+
+Supported document types:
+
+- Prescription
+- Lab Report
+- Diagnostic Report
+- Scan Report
+
+| Column Name | Data Type | Constraints | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `UUID` | `PRIMARY KEY` | Unique document identifier. |
 | `patient_id` | `UUID` | `FOREIGN KEY` | References `patients(id)`. |
-| `date` | `DATE` | `NOT NULL` | The official date the prescription was written by the doctor. |
-| `highlights` | `TEXT` | `NULLABLE` | Symptoms, observations, or chief complaints noted by the clinician. |
-| `treatment` | `TEXT` | `NULLABLE` | Structured lists of medications, dosages, frequencies, or therapies. |
-| `pre_diagnosis` | `TEXT` | `NULLABLE` | Ordered diagnostics (e.g., specific blood tests, MRI scans). |
-| `doctor` | `VARCHAR(255)` | `NULLABLE` | Name or identifier of the prescribing medical professional. |
+| `doc_type` | `VARCHAR(20)` | `NOT NULL` | Document category (`prescription`, `report`). |
+| `date` | `DATE` | `NOT NULL` | Date associated with the document. |
+| `doctor` | `VARCHAR(100)` | `NULLABLE` | Doctor or clinician name. |
+| `findings` | `JSONB` | `NULLABLE` | Structured report findings or extracted values. |
+| `diseases` | `TEXT[]` | `NULLABLE` | Diseases identified within the document. |
+| `highlights` | `VARCHAR(500)` | `NULLABLE` | Symptoms, complaints, observations, or summary notes. |
+| `treatment` | `TEXT` | `NULLABLE` | Prescribed medications, dosage information, and treatment instructions. |
+| `pre_diagnosis` | `VARCHAR(255)` | `NULLABLE` | Preliminary diagnosis or recommended investigations. |
+| `created_at` | `TIMESTAMPTZ` | `DEFAULT NOW()` | Record creation timestamp. |
 
-### `reports` Table
-*Stores factual findings extracted from unstructured lab reports or diagnostic scans.*
+---
 
-| Column Name | Data Type | Constraints | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | `UUID` | `PRIMARY KEY` | Unique report document identification key. |
-| `patient_id` | `UUID` | `FOREIGN KEY` | References `patients(id)`. |
-| `date` | `DATE` | `NOT NULL` | The execution or collection timestamp of the lab work. |
-| `findings` | `JSONB` / `TEXT` | `NOT NULL` | Exact raw numerical values or text metrics (e.g., RBC count: 4.8). |
-| `diseases` | `TEXT[]` | `NULLABLE` | Array of confirmed clinical conditions detected (e.g., `["Kidney Stones"]`). |
-| `doctor` | `VARCHAR(255)` | `NULLABLE` | Reviewing or authorizing laboratory clinician. |
+## Entity Relationship
+
+```text
+Patient
+   │
+   └───< Document
+```
+
+Each patient can own multiple medical documents.
+
+Each document belongs to exactly one patient.
 
 ---
 
@@ -60,5 +85,23 @@ The Qdrant index tracks unstructured contextual semantics. The payload fields ar
 | **Vector Input** | `page_content` | `TEXT` | **Embedded (Vectorized)** | LLM-generated concise clinical summaries combining `highlights`, `treatment`, `pre_diagnosis`, `findings`, and `diseases`. Used for dense semantic vector RAG search queries. |
 | **Metadata Filter**| `date` | `STRING` (ISO) | **Indexed (No Embedding)** | The exact calendar date of the clinical event. Used for chronological time-window pre-filtering. |
 | **Metadata Filter**| `doctor` | `STRING` | **Indexed (No Embedding)** | Name of the treating clinician. Used to isolate records from specific provider names. |
-| **Metadata Filter**| `patient_id` | `STRING` | **Indexed (No Embedding)** | Relational anchor string. Ensures absolute multi-tenant privacy separation inside the shared vector collection. |
-| **Metadata Filter**| `source_type` | `STRING` | **Indexed (No Embedding)** | Explicit tracking tag indicating parent source provenance (`"prescription"` vs. `"report"`). |
+| **Metadata Filter**| `postgres_id` | `STRING` | **Indexed (No Embedding)** | Relational anchor string `patient_id`. Ensures absolute multi-tenant privacy separation inside the shared vector collection. |
+| **Metadata Filter**| `doc_type` | `STRING` | **Indexed (No Embedding)** | Explicit tracking tag indicating parent source provenance (`"prescription"` vs. `"report"`). |
+
+---
+
+# 📌 Design Rationale
+
+This architecture provides:
+
+✅ Fast chronological queries via PostgreSQL
+
+✅ Semantic search via Qdrant
+
+✅ Traceability from vector memory to source document
+
+✅ RAG-friendly retrieval architecture
+
+✅ Scalable patient-specific filtering
+
+✅ Simple MVP implementation with room for future expansion

@@ -9,51 +9,67 @@ MedMemory/
 |   |
 |   ├── core/
 │   |    ├── config.py           # Environment configurations (Pydantic Settings)
-│   |    ├── security.py         # Auth guardrails, JWT validations, hashing
 │   |    ├── logging.py          # Centralized Logging
+│   |    ├── db.py               # Centralized Prisma Connection pool
+│   |    ├── qdrant.py           # Qdrant Client Connection management
 │   |    └── exceptions.py       # Centralized Exception handling
 │   │
 │   ├── api/                     # Controller layer (Routes)
 │   │   ├── __init__.py
 │   │   ├── router.py            # Global router registration hub
+│   │   ├── deps.py              # Retrieves `patient_id` from Global `app`
+│   │   ├── middleware.py        # Authorization Middleware
 │   │   ├── v1/
 │   │   │   ├── endpoints/
-│   │   │   │   ├── ingestion.py # Endpoints for document uploading & parsing
-│   │   │   │   ├── chatbot.py   # Interactive query & LangGraph chat sockets
+│   │   │   │   ├── auth.py      # Authentication management
+│   │   │   │   ├── ingestion.py # Endpoints for document uploading & processing
+│   │   │   │   ├── chat.py      # Interactive query & LangGraph chat sockets
 │   │   │   │   └── timeline.py  # Historical chronological rendering data
 │   │   │   └── __init__.py
 │   │
 │   ├── schemas/                 # Pydantic Schemas (Request/Response contracts)
 │   │   ├── __init__.py
-│   │   ├── patient.py
-│   │   ├── clinical.py          # Strict Pydantic models for LLM structured output
+│   │   ├── auth.py
+│   │   ├── ingestion.py
+│   │   ├── timeline.py
 │   │   └── chat.py
-|   |
-|   ├── models/                  # Prisma Schema models
-│   |    ├── postgres.py
-│   |    └── qdrant.py
 │   │
-│   ├── services/                # Business Logic Engine Layer
+│   ├── services/                     # Core Business Logic Layer
 │   │   ├── __init__.py
-│   │   ├── ingestion/           # Ingestion microservice cluster
-│   │   │   ├── parser.py        # Docling layout processing & parsing
-│   │   │   ├── processor.py     # Clean & normalize, spaCy sentence segmentation
-│   │   │   ├── ner.py           # scispaCy & MedCAT medical NER tagging
-│   │   │   ├── extractor.py     # Local LLM structured schema generator
-│   │   │   └── storage.py       # Dual-write driver to Postgres (Prisma) & Qdrant
 │   │   │
-│   │   ├── chatbot/             # Chatbot Multi-Agent pipeline
-│   │   │   ├── graph.py         # LangGraph network architecture mapping
-│   │   │   ├── classifier.py    # Local LLM request intent engine
-│   │   │   ├── retrievers.py    # Database connection routing (Postgres + Qdrant)
-│   │   │   └── generator.py     # Prompt compiler & guardrailed response writer
+│   │   ├── auth/                     # Authentication & Authorization Services
+│   │   │   ├── service.py            # Patient registration & login workflows
+│   │   │   ├── jwt.py                # JWT access token generation & validation
+│   │   │   └── crypto.py             # Password hashing & verification
 │   │   │
-│   │   └── timeline/
-│   │       └── generator.py     # Sequential timeline fact synthesizer
+│   │   ├── ingestion/                # Medical Document Ingestion Pipeline
+│   │   │   ├── main.py               # LangChain pipeline orchestration (8-step workflow)
+│   │   │   ├── validate_store.py     # File validation & secure local storage
+│   │   │   ├── ocr.py                # OCR & text extraction (PDFs / Images)
+│   │   │   ├── normalizer.py         # Text cleaning, normalization & typo correction
+│   │   │   ├── ner.py                # Clinical NER & entity linking (sciSpacy)
+│   │   │   ├── extraction.py         # Structured medical data extraction using LLM
+│   │   │   ├── store_sql.py          # PostgreSQL persistence layer
+│   │   │   └── store_qdrant.py       # Embedding generation & Qdrant indexing
+│   │   │
+│   │   ├── chat/                     # AI Medical Memory Chat Pipeline
+│   │   │   ├── main.py               # LangGraph workflow & SSE streaming engine
+│   │   │   ├── query_validate.py     # Query validation & sanitization
+│   │   │   ├── intent.py             # Query intent classification (Semantic / Hybrid)
+│   │   │   ├── retriever.py          # Context retrieval from Qdrant & Postgres
+│   │   │   └── generator.py          # Prompt assembly & LLM response generation
+│   │   │
+│   │   └── timeline/                 # Patient Health Timeline Services
+│   │       └── main.py               # Chronological medical history retrieval
 │   │
 │   └── prisma/                  # Prisma schema management configurations
 │       └── schema.prisma        # Database entity maps
 │
+├── .env.example
+├── setup.sh
+├── setup.ps1
+├── Dockerfile
+├── docker-compose.yml
 ├── requirements.txt
 └── README.md
 ```
