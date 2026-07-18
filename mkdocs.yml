@@ -1,6 +1,7 @@
 site_name: MedMemory AI Technical Docs
+use_directory_urls: true
 site_url: https://medmemory-ai.github.io/docs/
-repo_url: https://github.com/MedMemory-AI
+repo_url: https://github.com/MedMemory-AI/MedMemory
 edit_uri: edit/main/docs/
 
 theme:

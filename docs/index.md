@@ -13,6 +13,7 @@ Welcome to the central technical blueprints repository for MedMemory AI. Here yo
     <a href="">Live App</a> •
     <a href="https://github.com/orgs/MedMemory-AI/discussions">Discussions</a> •
     <a href="https://medmemory-ai.github.io/docs/">Documentation</a> •
+    <a href="https://github.com/orgs/MedMemory-AI/">Github</a> •
     <a href="https://www.linkedin.com/in/srinivas-batthula">LinkedIn</a> •
     <a href="mailto:srinivasbatthula05.official@gmail.com">Contact</a>
     </b>

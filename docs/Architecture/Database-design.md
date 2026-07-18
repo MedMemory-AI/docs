@@ -9,6 +9,10 @@ This separation enables reliable timeline tracking while supporting intelligent 
 
 ---
 
+![Database's Storage Architecture](../assets/database-schema.png)
+
+---
+
 # 🐘 1. Relational Database Layer (PostgreSQL)
 
 The relational layer stores structured patient information extracted from prescriptions, reports, scans, and other medical documents.
