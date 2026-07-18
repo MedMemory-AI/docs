@@ -4,102 +4,153 @@ This roadmap outlines the planned evolution of MedMemory AI.
 
 ---
 
-# ✅ Current Status
+# ✅ Current Progress
 
 ## Foundation
 
-- [x] Project Architecture
-- [x] Documentation Website
-- [x] FastAPI Backend Setup
+- [x] GitHub Organization
+- [x] Documentation Website (MKDocs)
+- [x] FastAPI Backend
 - [x] PostgreSQL Integration
 - [x] Qdrant Integration
 - [x] Ollama Integration
-- [x] Prisma ORM Setup
+- [x] Prisma ORM
+- [x] Docker & Docker Compose Setup
+- [x] Local Development Scripts (Windows & Linux)
 
 ---
-
-# 🚧 MVP (Version 1)
-
-Goal: Convert medical documents into searchable medical memory.
 
 ## Authentication
 
 - [x] User Registration
 - [x] User Login
 - [x] JWT Authentication
+- [x] Protected APIs
 
 ---
 
-## Document Ingestion
+## Medical Document Ingestion
 
 - [x] PDF Upload
 - [x] Image Upload
 - [x] OCR Pipeline
 - [x] Text Cleaning
 - [x] Medical Information Extraction
+- [x] Timeline Event Generation
+- [x] PostgreSQL Storage
+- [x] Vector Embedding Generation
+- [x] Qdrant Storage
 
 ---
 
 ## Medical Timeline
 
-- [x] Patient Timeline API
-- [x] Chronological History View
+- [x] Timeline API
+- [x] Chronological Medical History
 - [x] Timeline Filtering
 
 ---
 
-## RAG Chat
+## AI Chat
 
-- [x] Intent Router
-- [x] Qdrant Retrieval
-- [x] PostgreSQL Retrieval
+- [x] LangGraph Workflow
+- [x] Intent Routing
+- [x] Semantic Retrieval
 - [x] Hybrid Retrieval
 - [x] Context Builder
-- [x] LangGraph Workflow
+- [x] AI Medical Chat
 
 ---
 
-# 🎯 Version 2
-
-Goal: Better patient experience.
+# 🚧 Next Milestones
 
 ## Mobile Application
 
 - [ ] React Native App
 - [ ] Authentication Screens
 - [ ] Timeline UI
-- [ ] Chat Interface
+- [ ] AI Chat Interface
+- [ ] Document Upload
+- [ ] Profile & Settings
 
 ---
 
-## AI Improvements
+## Performance & Scalability
 
+- [ ] Redis Response Cache
+- [ ] Redis Session Cache
+- [ ] Kafka Upload Queue
+- [ ] Background Processing Workers
+- [ ] Async Ingestion Pipeline
+- [ ] Batch Document Processing
+
+---
+
+## Chat Improvements
+
+- [ ] Chat History Persistence
+- [ ] Conversational Memory
+- [ ] Context Window Management
 - [ ] Streaming Responses
-- [ ] Improved Retrieval Ranking
-- [ ] Context Compression
-- [ ] Better Medical Extraction
+- [ ] Source Attribution
+- [ ] Response Citations
 
 ---
 
-# 🚀 Version 3
+## Better Medical Extraction
 
-Goal: Advanced medical memory.
+- [ ] Docling Integration
+- [ ] Advanced OCR Pipeline
+- [ ] Layout-aware Parsing
+- [ ] Medical Table Extraction
+- [ ] Better Entity Extraction
+- [ ] Confidence Scores
+- [ ] PyTorch-based Medical Models
 
-## Intelligence Features
+---
+
+## Retrieval Improvements
+
+- [ ] Hybrid Search Optimization
+- [ ] Metadata Filtering
+- [ ] Retrieval Re-ranking
+- [ ] Context Compression
+- [ ] Multi-query Retrieval
+- [ ] Retrieval Evaluation
+
+---
+
+# 🚀 Future Features
+
+## Infrastructure
+
+- [ ] CI/CD Pipeline
+- [ ] Kubernetes Deployment in AWS EKS (Terraform)
+- [ ] Horizontal Scaling
+- [ ] Observability (Prometheus & Grafana)
+- [ ] OCI Deployment (Terraform)
+
+---
+
+## AI Intelligence
 
 - [ ] Treatment Progress Tracking
-- [ ] Medication History Tracking
-- [ ] Health Summary Generation
-- [ ] Longitudinal Disease Analysis
+- [ ] Medication History Analysis
+- [ ] Disease Progress Analysis
+- [ ] Longitudinal Health Insights
+- [ ] Automatic Health Summaries
+- [ ] Personalized Medical Timeline
 
 ---
 
-## Platform Features
+## Platform
 
 - [ ] Multi-language Support
 - [ ] Data Export
 - [ ] Self-Hosting Guide
 - [ ] Admin Dashboard
+- [ ] Audit Logs
+- [ ] Monitoring & Observability
 
 ---
 
@@ -111,9 +162,11 @@ Potential future directions:
 - Family Health Records
 - Voice-based Medical Chat
 - Wearable Device Integrations
-- Local-Only Offline Mode
+- Offline Local-Only Mode
 - Medical Knowledge Graph
+- Clinical Decision Support
+- FHIR / HL7 Integration
 
 ---
 
-Roadmap priorities may change based on community feedback and project needs.
+Roadmap priorities may evolve based on community feedback, research, and project goals.
