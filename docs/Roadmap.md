@@ -1,172 +1,227 @@
-# 🗺️ Roadmap
+# 🗺️ MedMemory Roadmap
 
-This roadmap outlines the planned evolution of MedMemory AI.
-
----
-
-# ✅ Current Progress
-
-## Foundation
-
-- [x] GitHub Organization
-- [x] Documentation Website (MKDocs)
-- [x] FastAPI Backend
-- [x] PostgreSQL Integration
-- [x] Qdrant Integration
-- [x] Ollama Integration
-- [x] Prisma ORM
-- [x] Docker & Docker Compose Setup
-- [x] Local Development Scripts (Windows & Linux)
+This roadmap outlines the planned evolution of **MedMemory** from a lightweight MVP into a production-grade AI-powered Personal Medical Memory platform.
 
 ---
 
-## Authentication
+# 🚀 Phase 1 — MVP (Current)
 
-- [x] User Registration
-- [x] User Login
+Goal: Build a complete end-to-end AI Medical Memory application using lightweight technologies and free-tier infrastructure.
+
+## Backend
+- [x] FastAPI REST API
 - [x] JWT Authentication
-- [x] Protected APIs
-
----
-
-## Medical Document Ingestion
-
-- [x] PDF Upload
-- [x] Image Upload
+- [x] Prisma + PostgreSQL
+- [x] Document Upload APIs
 - [x] OCR Pipeline
-- [x] Text Cleaning
 - [x] Medical Information Extraction
-- [x] Timeline Event Generation
-- [x] PostgreSQL Storage
-- [x] Vector Embedding Generation
-- [x] Qdrant Storage
+- [x] Timeline Generation API
+- [x] RAG Chat API
 
----
-
-## Medical Timeline
-
-- [x] Timeline API
-- [x] Chronological Medical History
-- [x] Timeline Filtering
-
----
-
-## AI Chat
-
+## AI / RAG
+- [x] PyMuPDF
+- [x] Tesseract OCR
 - [x] LangGraph Workflow
-- [x] Intent Routing
-- [x] Semantic Retrieval
-- [x] Hybrid Retrieval
-- [x] Context Builder
+- [x] Ollama Local LLM
+- [x] Qwen 2.5
+- [x] mxbai-embed-large
+- [x] Qdrant Vector Database
+
+## Frontend
+- [x] React Native App
+- [x] Authentication
+- [x] Upload Documents
+- [x] Patient Timeline
 - [x] AI Medical Chat
 
----
-
-# 🚧 Next Milestones
-
-## Mobile Application
-
-- [ ] React Native App
-- [ ] Authentication Screens
-- [ ] Timeline UI
-- [ ] AI Chat Interface
-- [ ] Document Upload
-- [ ] Profile & Settings
+## Deployment
+- [x] OCI Free Tier VM
+- [x] Ollama Server
+- [x] FastAPI Server
+- [x] Neon PostgreSQL
+- [x] Qdrant Cloud
 
 ---
 
-## Performance & Scalability
+# 🚀 Phase 2 — Improved Document Intelligence
 
-- [ ] Redis Response Cache
-- [ ] Redis Session Cache
-- [ ] Kafka Upload Queue
-- [ ] Background Processing Workers
-- [ ] Async Ingestion Pipeline
-- [ ] Batch Document Processing
+Goal: Improve extraction quality and support more medical document formats.
 
----
+## Document Processing
 
-## Chat Improvements
+- [ ] Docling
+- [ ] Better OCR pipeline
+- [ ] Multi-page layout understanding
+- [ ] Table extraction
+- [ ] Handwritten prescription support
+- [ ] Signature & stamp detection
+- [ ] Better scanned PDF support
 
-- [ ] Chat History Persistence
-- [ ] Conversational Memory
-- [ ] Context Window Management
-- [ ] Streaming Responses
-- [ ] Source Attribution
-- [ ] Response Citations
+## AI Extraction
 
----
-
-## Better Medical Extraction
-
-- [ ] Docling Integration
-- [ ] Advanced OCR Pipeline
-- [ ] Layout-aware Parsing
-- [ ] Medical Table Extraction
-- [ ] Better Entity Extraction
-- [ ] Confidence Scores
-- [ ] PyTorch-based Medical Models
+- [ ] Advanced prompt engineering
+- [ ] Multi-stage extraction pipeline
+- [ ] Medical terminology normalization
+- [ ] Improved medication extraction
+- [ ] Better diagnosis extraction
+- [ ] Improved laboratory report parsing
+- [ ] Confidence scoring for extracted data
 
 ---
 
-## Retrieval Improvements
+# 🚀 Phase 3 — Better AI Models
 
-- [ ] Hybrid Search Optimization
-- [ ] Metadata Filtering
-- [ ] Retrieval Re-ranking
-- [ ] Context Compression
-- [ ] Multi-query Retrieval
-- [ ] Retrieval Evaluation
+Goal: Improve extraction accuracy and response quality.
 
----
+## Local LLMs
 
-# 🚀 Future Features
+- [ ] Larger Qwen models
+- [ ] Llama models
+- [ ] Medical domain LLM evaluation
+- [ ] Better embedding models
 
-## Infrastructure
+## AI Features
 
-- [ ] CI/CD Pipeline
-- [ ] Kubernetes Deployment in AWS EKS (Terraform)
-- [ ] Horizontal Scaling
-- [ ] Observability (Prometheus & Grafana)
-- [ ] OCI Deployment (Terraform)
-
----
-
-## AI Intelligence
-
-- [ ] Treatment Progress Tracking
-- [ ] Medication History Analysis
-- [ ] Disease Progress Analysis
-- [ ] Longitudinal Health Insights
-- [ ] Automatic Health Summaries
-- [ ] Personalized Medical Timeline
+- [ ] Structured Output Validation
+- [ ] Self-correction pipeline
+- [ ] Hallucination reduction
+- [ ] Citation-based responses
+- [ ] Better medical reasoning
+- [ ] Multi-agent extraction workflow
 
 ---
 
-## Platform
+# 🚀 Phase 4 — Medical Imaging Support
 
-- [ ] Multi-language Support
-- [ ] Data Export
-- [ ] Self-Hosting Guide
-- [ ] Admin Dashboard
+Goal: Support diagnostic imaging.
+
+## Imaging
+
+- [ ] DICOM support
+- [ ] CT Scans
+- [ ] MRI
+- [ ] PET
+- [ ] Ultrasound
+- [ ] X-Ray
+
+## Processing
+
+- [ ] DICOM metadata extraction
+- [ ] Imaging timeline
+- [ ] AI-assisted scan summaries
+- [ ] Imaging report linking
+
+---
+
+# 🚀 Phase 5 — Advanced Patient Timeline
+
+Goal: Build a comprehensive lifelong medical timeline.
+
+## Timeline
+
+- [ ] Disease progression
+- [ ] Medication history
+- [ ] Side effects timeline
+- [ ] Surgery history
+- [ ] Vaccination history
+- [ ] Allergy tracking
+- [ ] Chronic disease monitoring
+
+## Analytics
+
+- [ ] Health trends
+- [ ] Disease recurrence
+- [ ] Medication adherence
+- [ ] Recovery tracking
+- [ ] Health insights dashboard
+
+---
+
+# 🚀 Phase 6 — Smarter AI Assistant
+
+Goal: Make the AI a long-term medical assistant.
+
+## AI
+
+- [ ] Follow-up questions
+- [ ] Personalized health summaries
+- [ ] Visit preparation
+- [ ] Medication reminders
+- [ ] Doctor-friendly summaries
+- [ ] Long-context conversations
+- [ ] Memory optimization
+
+---
+
+# 🚀 Phase 7 — Production Infrastructure
+
+Goal: Make MedMemory production-ready.
+
+## DevOps
+
+- [ ] Docker Compose
+- [ ] GitHub Actions CI/CD
+- [ ] Multi-stage Docker Images
+- [ ] Production Logging
+- [ ] Monitoring
+- [ ] Metrics
+- [ ] Distributed Tracing
+
+## Kubernetes
+
+- [ ] Kubernetes manifests
+- [ ] Helm Charts
+- [ ] AWS EKS Deployment
+- [ ] Oracle Cloud Kubernetes Deployment
+- [ ] Horizontal Pod Autoscaling
+- [ ] Rolling Updates
+- [ ] Secrets Management
+
+---
+
+# 🚀 Phase 8 — Security & Compliance
+
+Goal: Improve security and privacy.
+
+## Security
+
+- [ ] Refresh Tokens
+- [ ] Rate Limiting
 - [ ] Audit Logs
-- [ ] Monitoring & Observability
+- [ ] File Encryption
+- [ ] Database Encryption
+- [ ] Role-Based Access Control
+
+## Privacy
+
+- [ ] Data export
+- [ ] Account deletion
+- [ ] Secure backups
+- [ ] Data retention policies
 
 ---
 
-# 💡 Future Ideas
+# 🚀 Phase 9 — Ecosystem
 
-Potential future directions:
+Goal: Expand MedMemory beyond document storage.
 
-- Doctor Portal
-- Family Health Records
-- Voice-based Medical Chat
-- Wearable Device Integrations
-- Offline Local-Only Mode
-- Medical Knowledge Graph
-- Clinical Decision Support
-- FHIR / HL7 Integration
+## Integrations
+
+- [ ] Wearables
+- [ ] Health APIs
+- [ ] Smartwatch data
+- [ ] Laboratory integrations
+- [ ] Hospital integrations
+- [ ] Cloud storage connectors
 
 ---
 
-Roadmap priorities may evolve based on community feedback, research, and project goals.
+# 🌍 Long-Term Vision
+
+MedMemory aims to become an AI-powered lifelong Personal Medical Memory that:
+
+- Organizes a patient's complete medical history into a structured timeline.
+- Understands prescriptions, reports, discharge summaries, and medical imaging.
+- Enables secure AI-powered conversations over personal medical history.
+- Assists patients and healthcare professionals with faster and more informed clinical decisions.
+- Runs efficiently on both free-tier and production-grade cloud infrastructure.
