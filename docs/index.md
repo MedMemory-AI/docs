@@ -14,7 +14,7 @@
   </p>
   <br>
 
-  ![Architecture Workflow diagram](./assets/architecture-new.png)
+  <img alt="Architecture Workflow diagram" src="./assets/architecture-new.png">
   <br>
 
   <p><b>An open-source, privacy-first medical memory engine. Transform scattered health records into a structured timeline in real-time.
