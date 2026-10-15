@@ -9,7 +9,6 @@
     <a href="https://github.com/orgs/MedMemory-AI/">Github</a> •
     <a href="https://hub.docker.com/r/srinivasbatthula05/medmemory-backend">DockerHub Image</a> •
     <a href="https://github.com/orgs/MedMemory-AI/discussions">Discussions</a> •
-    <a href="https://www.linkedin.com/in/srinivas-batthula">LinkedIn</a> •
     <a href="https://linktr.ee/srinivas_batthula">Contact</a>
     </b>
   </p>
