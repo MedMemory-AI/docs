@@ -24,6 +24,8 @@ The platform transforms medical documents into a lifelong, searchable health mem
 
 ### Architecture Images
 
-![Server-Architecture-1](../assets/server-architecture-1.png)
+![Server-Architecture-1](../assets/architecture-new.png)
 
-![Server-Architecture-2](../assets/server-architecture-2.png)
+![Server-Architecture-2](../assets/server-architecture-1.png)
+
+![Server-Architecture-3](../assets/server-architecture-2.png)
