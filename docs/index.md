@@ -10,9 +10,12 @@
     <a href="https://hub.docker.com/r/srinivasbatthula05/medmemory-backend">DockerHub Image</a> •
     <a href="https://github.com/orgs/MedMemory-AI/discussions">Discussions</a> •
     <a href="https://www.linkedin.com/in/srinivas-batthula">LinkedIn</a> •
-    <a href="mailto:srinivasbatthula05.official@gmail.com">Contact</a>
+    <a href="https://linktr.ee/srinivas_batthula">Contact</a>
     </b>
   </p>
+  <br>
+
+  ![Architecture Workflow diagram](./assets/architecture-new.png)
   <br>
 
   <p><b>An open-source, privacy-first medical memory engine. Transform scattered health records into a structured timeline in real-time.
