@@ -2,8 +2,9 @@
 
 This guide explains how to run MedMemory locally using either:
 
-1. **Docker Setup (Recommended)**
-2. **Manual Setup**
+1. [**Quick Starter**](https://github.com/MedMemory-AI/MedMemory#quick-start-guide-backend)
+2. **Docker Setup (Recommended)**
+3. **Manual Setup**
 
 ---
 
