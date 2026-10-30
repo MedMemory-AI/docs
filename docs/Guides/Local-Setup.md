@@ -6,9 +6,8 @@ This guide explains how to run MedMemory locally:
 1. [**Local Setup**](https://github.com/MedMemory-AI/frontend-app#setup-guide-frontend)
 
 ## For Backend
-1. [**Quick Starter**](https://github.com/MedMemory-AI/MedMemory#quick-start-guide-backend)
-2. **Docker Setup (Recommended)**
-3. **Manual Setup**
+1. **Docker Setup (Recommended)**
+2. **Manual Setup**
 
 ---
 
@@ -63,6 +62,8 @@ Set-ExecutionPolicy Bypass -Scope Process
 # 🛠 Option 2: Manual Setup
 
 Follow these steps if you prefer running services manually.
+
+[**Quick Starter for Existing Setup's**](https://github.com/MedMemory-AI/MedMemory#quick-start-guide-backend)
 
 ---
 
